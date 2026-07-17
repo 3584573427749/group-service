@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   slim-service:
-    container_name: slim-service
+    container_name: group-service
     build: .
     ports:
       - "8080:8080"
