@@ -23,7 +23,7 @@ class DbalGroupLevelRepository extends AbstractDbRepository implements GroupLeve
      * @inheritDoc
      */
     public function getAll() : array {
-        $rows = $this->connection->executeQuery('SELECT * FROM ' . self::TABLE . ' WHERE deleted_at IS NULL')
+        $rows = $this->connection->executeQuery('SELECT * FROM ' . self::TABLE)
             ->fetchAllAssociative();
 
         return array_map(fn ($row) => GroupLevel::fromDBRow($row), $rows);
