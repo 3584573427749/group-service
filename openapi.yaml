@@ -1,61 +1,254 @@
 openapi: 3.0.3
 info:
-  title: Auth Service API
-  version: 1.0.0
+  title: Group Service API
+  version: 0.1.0
   description: >-
-    OpenAPI för autentiserings- och användarhanteringstjänster i simning.ax-miljön
+    OpenAPI för hantering av grupper, ledare och simmare i simning.ax-miljön
 
 servers:
   - url: http://localhost:8080
 
 paths:
-  /users:
-    post:
-      summary: Create user
-      operationId: createUser
+  /group-levels:
+    get:
+      summary: Get all group levels
+      operationId: getGroupLevels
       tags:
-        - Users
+        - Group Levels
+      responses:
+        '200':
+          description: A list of group levels
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GroupLevel'
+
+    post:
+      summary: Create group level
+      operationId: createGroupLevel
+      tags:
+        - Group Levels
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUserRequest'
+              $ref: '#/components/schemas/CreateGroupLevelRequest'
       responses:
         '201':
-          description: User created
+          description: Group level created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/GroupLevel'
         '400':
           description: Invalid JSON
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '409':
-          description: User already exists
+          description: Group level already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '422':
           description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /group-levels/{id}:
+    get:
+      summary: Get group level by ID
+      operationId: getGroupLevelById
+      tags:
+        - Group Levels
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Group level found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupLevel'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Group level not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Update group level by ID
+      operationId: updateGroupLevelById
+      tags:
+        - Group Levels
+      parameters:
+        - name: id
+          in: path
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGroupLevelRequest'
+      responses:
+        '201':
+          description: Group level created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupLevel'
+        '400':
+          description: Invalid JSON
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Group level already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      summary: Delete group level by ID
+      operationId: deleteGroupLevelById
+      tags:
+        - Group Levels
+      parameters:
+        - name: id
+          in: path
+          required: true
+      responses:
+        '204':
+          description: Group level deleted
+        '404':
+          description: Group level not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
 components:
   schemas:
-    CreateUserRequest:
+    ErrorResponse:
       type: object
       required:
-        - email
-        - firstName
-        - lastName
+        - type
+        - message
       properties:
-        email:
+        type:
           type: string
-          format: email
-          example: test@example.com
-        firstName:
+        message:
+          type: string
+        details:
+          type: object
+          nullable: true
+          additionalProperties: true
+
+    CreateGroupLevelRequest:
+      type: object
+      required:
+        - name
+        - sortOrder
+      properties:
+        name:
           type: string
           minLength: 2
-          example: User
-        lastName:
+          example: Beginner
+        description:
+          type: string
+          example: A group for beginners
+        sortOrder:
+          type: integer
+          example: 1
+
+    UpdateGroupLevelRequest:
+      type: object
+      required:
+        - id
+        - name
+        - sortOrder
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
           type: string
           minLength: 2
-          example: Name
+          example: Beginner
+        description:
+          type: string
+          example: A group for beginners
+        sortOrder:
+          type: integer
+          example: 1
+        createdAt:
+          type: string
+          format: date-time
+          nullable: true
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    GroupLevel:
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - sortOrder
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          minLength: 2
+          example: Beginner
+        description:
+          type: string
+          example: A group for beginners
+        sortOrder:
+          type: integer
+          example: 1
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
 
     User:
       type: object
