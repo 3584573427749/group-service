@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-use App\Http\Actions\User\CreateUserAction;
-use App\Http\Actions\User\DeleteUserAction;
-use App\Http\Actions\User\GetAllUsersAction;
-use App\Http\Actions\User\GetUserAction;
-use App\Http\Actions\User\UpdateUserAction;
+use App\Http\Actions\GroupLevel\CreateGroupLevelAction;
+use App\Http\Actions\GroupLevel\DeleteGroupLevelAction;
+use App\Http\Actions\GroupLevel\GetAllGroupLevelsAction;
+use App\Http\Actions\GroupLevel\GetGroupLevelAction;
+use App\Http\Actions\GroupLevel\UpdateGroupLevelAction;
 use Slim\App;
 
 return function (App $app) : void {
 
-    $app->post('/users', CreateUserAction::class);
-    $app->get('/users', GetAllUsersAction::class);
-    $app->get('/users/{id}', GetUserAction::class);
-    $app->put('/users/{id}', UpdateUserAction::class);
-    $app->delete('/users/{id}', DeleteUserAction::class);
+    $app->post('/group-levels', CreateGroupLevelAction::class);
+    $app->get('/group-levels', GetAllGroupLevelsAction::class);
+    $app->get('/group-levels/{id}', GetGroupLevelAction::class);
+    $app->put('/group-levels/{id}', UpdateGroupLevelAction::class);
+    $app->delete('/group-levels/{id}', DeleteGroupLevelAction::class);
 };

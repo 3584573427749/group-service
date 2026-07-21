@@ -31,4 +31,4 @@ grumphp:
         - 'migrations/'
 
     composer_script:
-      script: cs-fix
+      script: cs-fix:check

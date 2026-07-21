@@ -1,0 +1,42 @@
+{
+    "statusCode": 200,
+    "data": [
+        {
+            "id": "019ea89c-e194-71b3-b05a-1fd8b0769ec2",
+            "email": "kjell@kejpa.com",
+            "firstName": "Kjell",
+            "lastName": "Hansen",
+            "roles": [
+                "019f3389-7eeb-73b5-a6f1-4c521a1def8e"
+            ],
+            "updatedAt": null,
+            "createdAt": "2026-06-08T19:01:00+00:00",
+            "deletedAt": null
+        },
+        {
+            "id": "019f1f2d-f1d9-7358-83f6-d80ea91f5392",
+            "email": "nizze@liten.se",
+            "firstName": "Nizze",
+            "lastName": "Liten",
+            "roles": [
+                "019f36a5-0645-70c1-a98d-11bf601daefa"
+            ],
+            "updatedAt": "2026-07-13T12:51:50+00:00",
+            "createdAt": "2026-07-01T19:35:32+00:00",
+            "deletedAt": null
+        },
+        {
+            "id": "019f5a16-38b3-71f7-8591-e58568ce9449",
+            "email": "info@asf.ax",
+            "firstName": "Henny",
+            "lastName": "Verksamhetsledare",
+            "roles": [
+                "019f36a5-0645-70c1-a98d-11bf601daefa",
+                "019f5b1f-4c44-72cc-a4f7-209c6265c609"
+            ],
+            "updatedAt": "2026-07-13T13:13:25+00:00",
+            "createdAt": "2026-07-13T06:07:13+00:00",
+            "deletedAt": null
+        }
+    ]
+}
