@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace App\Application\Validators;
 
-use Ramsey\Uuid\Uuid;
-
 class UpdateGroupLevelValidator {
     /**
      * @param array<string, mixed> $data
      * @return string[]
      */
     public static function validate(array $data) : array {
+        // $data['groupLevelId'] sätts av Action från route-parametern
+        // och används för att säkerställa att payload-id
+        // matchar det id som efterfrågas i URL:en.
         $errors = [];
 
         if (!isset($data['id'])) {
             $errors['id'] = 'Id saknas i anrop';
         } elseif ($data['id'] !== $data['groupLevelId']) {
             $errors['id'] = 'Id matchar inte anropet';
-        } elseif (!Uuid::isValid($data['id'])) {
-            $errors['id'] = 'Id är ogiltigt formaterat';
         }
 
         if (!isset($data['name'])) {
@@ -30,10 +29,13 @@ class UpdateGroupLevelValidator {
 
         if (!isset($data['sortOrder'])) {
             $errors['sortOrder'] = 'SortOrder behöver finnas.';
-        } elseif (filter_var($data['sortOrder'], FILTER_VALIDATE_INT) === false) {
-            $errors['sortOrder'] = 'SortOrder måste vara ett heltal.';
-        } elseif (filter_var($data['sortOrder'], FILTER_VALIDATE_INT) < 0) {
-            $errors['sortOrder'] = 'SortOrder måste vara ett positivt heltal.';
+        } else {
+            $sortOrder = filter_var($data['sortOrder'], FILTER_VALIDATE_INT);
+            if ($sortOrder === false) {
+                $errors['sortOrder'] = 'SortOrder måste vara ett heltal.';
+            } elseif ($sortOrder < 0) {
+                $errors['sortOrder'] = 'SortOrder måste vara ett positivt heltal.';
+            }
         }
 
         return $errors;

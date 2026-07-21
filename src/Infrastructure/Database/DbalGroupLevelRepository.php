@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Infrastructure\Database;
 
 use App\Domain\Entities\GroupLevel;
+use App\Domain\Exception\NotFoundException;
 use App\Domain\Repositories\GroupLevelRepository;
 use App\Domain\ValueObjects\GroupLevelId;
+use Doctrine\DBAL\Exception;
 
 class DbalGroupLevelRepository extends AbstractDbRepository implements GroupLevelRepository {
     private const TABLE = 'group_levels';
@@ -34,13 +36,20 @@ class DbalGroupLevelRepository extends AbstractDbRepository implements GroupLeve
             ->fetchAssociative();
 
         if ($row === false) {
-            throw new \InvalidArgumentException('GroupLevel saknas');
+            throw new NotFoundException('GroupLevel saknas');
         }
 
         return GroupLevel::fromDBRow($row);
     }
 
+    /**
+     * @throws Exception
+     */
     public function delete(GroupLevelId $id) : void {
-        $this->connection->delete(self::TABLE, ['id' => $id->toString()]);
+        $affectedRows = $this->connection->delete(self::TABLE, ['id' => $id->toString()]);
+
+        if ($affectedRows === 0) {
+            throw new NotFoundException('GroupLevel saknas');
+        }
     }
 }

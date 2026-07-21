@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Actions\GroupLevel;
 
-use App\Application\Commands\UpdateGroupLevelCommand;
-use App\Application\Handlers\UpdateGroupLevelHandler;
+use App\Application\Commands\GroupLevel\UpdateGroupLevelCommand;
+use App\Application\Handlers\GroupLevel\UpdateGroupLevelHandler;
 use App\Application\Validators\UpdateGroupLevelValidator;
 use App\Domain\Exception\ValidationException;
 use Psr\Http\Message\ResponseInterface as Response;

@@ -20,10 +20,13 @@ class CreateGroupLevelValidator {
 
         if (!isset($data['sortOrder'])) {
             $errors['sortOrder'] = 'SortOrder behöver finnas.';
-        } elseif (filter_var($data['sortOrder'], FILTER_VALIDATE_INT) === false) {
-            $errors['sortOrder'] = 'SortOrder måste vara ett heltal.';
-        } elseif (filter_var($data['sortOrder'], FILTER_VALIDATE_INT) < 0) {
-            $errors['sortOrder'] = 'SortOrder måste vara ett positivt heltal.';
+        } else {
+            $sortOrder = filter_var($data['sortOrder'], FILTER_VALIDATE_INT);
+            if ($sortOrder === false) {
+                $errors['sortOrder'] = 'SortOrder måste vara ett heltal.';
+            } elseif ($sortOrder < 0) {
+                $errors['sortOrder'] = 'SortOrder måste vara ett positivt heltal.';
+            }
         }
 
         return $errors;

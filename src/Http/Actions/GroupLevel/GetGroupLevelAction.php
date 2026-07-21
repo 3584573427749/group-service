@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Actions\GroupLevel;
 
-use App\Application\Handlers\GetGroupLevelHandler;
+use App\Application\Handlers\GroupLevel\GetGroupLevelHandler;
 use App\Domain\ValueObjects\GroupLevelId;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;

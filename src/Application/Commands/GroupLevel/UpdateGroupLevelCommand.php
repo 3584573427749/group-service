@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Commands;
+namespace App\Application\Commands\GroupLevel;
 
-class CreateGroupLevelCommand {
+use App\Domain\ValueObjects\GroupLevelId;
+
+class UpdateGroupLevelCommand {
     public function __construct(
+        public GroupLevelId $id,
         public string $name,
         public string $description,
         public int $sortOrder,
@@ -17,6 +20,7 @@ class CreateGroupLevelCommand {
      */
     public static function fromRequest(array $data) : self {
         return new self(
+            id: new GroupLevelId($data['id']),
             name: $data['name']
             |>trim(...)
             |>mb_strtolower(...)

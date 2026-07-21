@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Handlers;
+namespace App\Application\Handlers\GroupLevel;
 
 use App\Domain\ValueObjects\GroupLevelId;
 

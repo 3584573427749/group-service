@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Handlers;
+namespace App\Application\Handlers\GroupLevel;
 
-use App\Application\Commands\CreateGroupLevelCommand;
+use App\Application\Commands\GroupLevel\CreateGroupLevelCommand;
 use App\Domain\DataTransportObjects\GroupLevelDTO;
 use App\Domain\Entities\GroupLevel;
 use App\Domain\ValueObjects\DateTimeValue;
