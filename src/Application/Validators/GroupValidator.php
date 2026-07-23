@@ -12,6 +12,7 @@ class GroupValidator {
     public static function validateCreate(array $data) : array {
         $errors = [];
 
+        self::validateGroupLevelId($data, $errors);
         self::validateName($data, $errors);
         self::validateVenue($data, $errors);
         self::validateActive($data, $errors);

@@ -28,7 +28,7 @@ class CreateGroupCommand {
             |>mb_strtolower(...)
             |>mb_ucfirst(...),
             description: trim($data['description'] ?? ''),
-            venue: $data['venue'] ?? ''
+            venue: $data['venue']
             |>trim(...)
             |>mb_strtolower(...)
             |>mb_ucfirst(...),

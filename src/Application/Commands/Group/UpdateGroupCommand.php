@@ -31,7 +31,10 @@ class UpdateGroupCommand {
             |>mb_strtolower(...)
             |>mb_ucfirst(...),
             description: trim($data['description'] ?? ''),
-            venue: trim($data['venue'] ?? ''),
+            venue: $data['venue']
+            |>trim(...)
+            |>mb_strtolower(...)
+            |>mb_ucfirst(...),
             active: (int) filter_var($data['active'], FILTER_VALIDATE_INT),
             competitive: (int) filter_var($data['competitive'], FILTER_VALIDATE_INT),
         );
