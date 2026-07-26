@@ -7,6 +7,7 @@ namespace Http\Actions\Group;
 use App\Application\Handlers\Group\GetGroupHandler;
 use App\Domain\DataTransportObjects\GroupDTO;
 use App\Domain\Entities\Group;
+use App\Domain\Enums\Venue;
 use App\Domain\ValueObjects\DateTimeValue;
 use App\Domain\ValueObjects\GroupId;
 use App\Domain\ValueObjects\GroupLevelId;
@@ -26,7 +27,7 @@ final class GetGroupActionTest extends TestCase {
             new GroupLevelId('660e8400-e29b-41d4-a716-446655440000'),
             'Baddaren',
             'För nybörjare',
-            'Arena',
+            Venue::ALANDS_IDROTTCENTER,
             1,
             1,
             new DateTimeValue('2026-06-10T10:00:00+00:00'),
@@ -78,7 +79,7 @@ final class GetGroupActionTest extends TestCase {
         self::assertSame('660e8400-e29b-41d4-a716-446655440000', $payload['data']['groupLevelId']);
         self::assertSame('Baddaren', $payload['data']['name']);
         self::assertSame('För nybörjare', $payload['data']['description']);
-        self::assertSame('Arena', $payload['data']['venue']);
+        self::assertSame('Ålands Idrottscenter', $payload['data']['venue']);
         self::assertSame(1, $payload['data']['active']);
         self::assertSame(1, $payload['data']['competitive']);
     }

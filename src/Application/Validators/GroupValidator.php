@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Validators;
 
+use App\Domain\Enums\Venue;
+
 class GroupValidator {
     /**
      * @param array<string, mixed> $data
@@ -76,6 +78,12 @@ class GroupValidator {
     private static function validateVenue(array $data, array &$errors) : void {
         if (!isset($data['venue']) || empty($data['venue'])) {
             $errors['venue'] = 'Plats är obligatoriskt';
+        } else {
+            try {
+                Venue::from($data['venue']);
+            } catch (\ValueError) {
+                $errors['venue'] = 'Ogiltig anläggning';
+            }
         }
     }
 

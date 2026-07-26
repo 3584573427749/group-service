@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entities;
 
+use App\Domain\Enums\Venue;
 use App\Domain\ValueObjects\DateTimeValue;
 use App\Domain\ValueObjects\GroupId;
 use App\Domain\ValueObjects\GroupLevelId;
@@ -15,7 +16,7 @@ class Group implements JsonSerializable {
         private GroupLevelId $groupLevelId,
         private string $name,
         private string $description,
-        private string $venue,
+        private Venue $venue,
         private int $active,
         private int $competitive,
         private DateTimeValue $createdAt,
@@ -43,7 +44,7 @@ class Group implements JsonSerializable {
         return $this->name;
     }
 
-    public function getVenue() : string {
+    public function getVenue() : Venue {
         return $this->venue;
     }
 
@@ -71,10 +72,8 @@ class Group implements JsonSerializable {
         $this->name = $name;
     }
 
-    public function setVenue(string $venue) : Group {
+    public function setVenue(Venue $venue) : void {
         $this->venue = $venue;
-
-        return $this;
     }
 
     public function setActive(int $active) : void {
@@ -98,7 +97,7 @@ class Group implements JsonSerializable {
             new GroupLevelId($row['group_level_id']),
             $row['name'],
             $row['description'],
-            $row['venue'],
+            Venue::from($row['venue']),
             $row['active'],
             $row['competitive'],
             new DateTimeValue($row['created_at']),
@@ -115,7 +114,7 @@ class Group implements JsonSerializable {
             'group_level_id' => $this->groupLevelId->toString(),
             'name' => $this->name,
             'description' => $this->description,
-            'venue' => $this->venue,
+            'venue' => $this->venue->value,
             'active' => $this->active,
             'competitive' => $this->competitive,
             'created_at' => $this->createdAt->toString(),
@@ -132,7 +131,7 @@ class Group implements JsonSerializable {
             'groupLevelId' => $this->groupLevelId->toString(),
             'name' => $this->name,
             'description' => $this->description,
-            'venue' => $this->venue,
+            'venue' => $this->venue->value,
             'active' => $this->active,
             'competitive' => $this->competitive,
             'createdAt' => $this->createdAt->toString(),

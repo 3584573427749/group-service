@@ -22,9 +22,9 @@ return function (App $app) : void {
     $app->put('/group-levels/{id}', UpdateGroupLevelAction::class);
     $app->delete('/group-levels/{id}', DeleteGroupLevelAction::class);
 
-    $app->post('/group', CreateGroupAction::class);
-    $app->get('/group', GetAllGroupsAction::class);
-    $app->get('/group/{id}', GetGroupAction::class);
-    $app->put('/group/{id}', UpdateGroupAction::class);
-    $app->delete('/group/{id}', DeleteGroupAction::class);
+    $app->post('/groups', CreateGroupAction::class);
+    $app->get('/groups', GetAllGroupsAction::class);
+    $app->get('/groups/{id}', GetGroupAction::class);
+    $app->put('/groups/{id}', UpdateGroupAction::class);
+    $app->delete('/groups/{id}', DeleteGroupAction::class);
 };

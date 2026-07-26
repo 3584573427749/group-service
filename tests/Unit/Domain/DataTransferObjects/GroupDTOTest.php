@@ -6,6 +6,7 @@ namespace Tests\Unit\Domain\DataTransferObjects;
 
 use App\Domain\DataTransportObjects\GroupDTO;
 use App\Domain\Entities\Group;
+use App\Domain\Enums\Venue;
 use App\Domain\ValueObjects\DateTimeValue;
 use App\Domain\ValueObjects\GroupId;
 use App\Domain\ValueObjects\GroupLevelId;
@@ -18,7 +19,7 @@ final class GroupDTOTest extends TestCase {
             new GroupLevelId('12345678-e29b-41d4-a716-446655440000'),
             'Baddaren',
             'För nybörjare',
-            'Arena',
+            Venue::ALANDS_IDROTTCENTER,
             1,
             1,
             new DateTimeValue('2026-01-01T10:00:00+00:00'),
@@ -36,7 +37,7 @@ final class GroupDTOTest extends TestCase {
         self::assertSame('Baddaren', $data['name']);
         self::assertSame('För nybörjare', $data['description']);
         self::assertSame('12345678-e29b-41d4-a716-446655440000', $data['groupLevelId']);
-        self::assertSame('Arena', $data['venue']);
+        self::assertSame('Ålands Idrottscenter', $data['venue']);
         self::assertSame(1, $data['active']);
         self::assertSame(1, $data['competitive']);
         self::assertSame('2026-01-01T10:00:00+00:00', $data['createdAt']);
@@ -48,7 +49,7 @@ final class GroupDTOTest extends TestCase {
             new GroupLevelId('12345678-e29b-41d4-a716-446655440000'),
             'Pingvinen',
             'Kan simma själv',
-            'Arena',
+            Venue::ALANDS_IDROTTCENTER,
             1,
             1,
             new DateTimeValue('2026-01-01T10:00:00+00:00'),
@@ -76,7 +77,7 @@ final class GroupDTOTest extends TestCase {
             new GroupLevelId('12345678-e29b-41d4-a716-446655440000'),
             'Hajen',
             'Tävlingsförberedande',
-            'Arena',
+            Venue::ALANDS_IDROTTCENTER,
             1,
             1,
             new DateTimeValue('2026-01-01T10:00:00+00:00'),

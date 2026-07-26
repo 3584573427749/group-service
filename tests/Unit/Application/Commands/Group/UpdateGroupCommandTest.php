@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Commands\Group;
 
 use App\Application\Commands\Group\UpdateGroupCommand;
+use App\Domain\Enums\Venue;
 use PHPUnit\Framework\TestCase;
 
 final class UpdateGroupCommandTest extends TestCase {
@@ -14,7 +15,7 @@ final class UpdateGroupCommandTest extends TestCase {
             'groupLevelId' => '12345678-9012-3456-7890-123456789012',
             'name' => 'Baddaren',
             'description' => 'För nybörjare',
-            'venue' => 'arena',
+            'venue' => 'Mariebad',
             'active' => 1,
             'competitive' => 1,
         ];
@@ -25,7 +26,7 @@ final class UpdateGroupCommandTest extends TestCase {
         self::assertSame('12345678-9012-3456-7890-123456789012', $command->groupLevelId->toString());
         self::assertSame('Baddaren', $command->name);
         self::assertSame('För nybörjare', $command->description);
-        self::assertSame('Arena', $command->venue);
+        self::assertSame(Venue::MARIEBAD, $command->venue);
         self::assertSame(1, $command->active);
         self::assertSame(1, $command->competitive);
     }
@@ -36,7 +37,7 @@ final class UpdateGroupCommandTest extends TestCase {
             'groupLevelId' => '12345678-9012-3456-7890-123456789012',
             'name' => '  bADdArEn  ',
             'description' => 'För nybörjare',
-            'venue' => 'arena',
+            'venue' => 'Mariebad',
             'active' => 1,
             'competitive' => 1,
         ];
@@ -46,28 +47,12 @@ final class UpdateGroupCommandTest extends TestCase {
         self::assertSame('Baddaren', $command->name);
     }
 
-    public function testVenueIsTrimmedAndNormalized() : void {
-        $data = [
-            'id' => '550e8400-e29b-41d4-a716-446655440000',
-            'groupLevelId' => '12345678-9012-3456-7890-123456789012',
-            'name' => 'Baddaren',
-            'description' => 'För nybörjare',
-            'venue' => '    arEna   ',
-            'active' => 1,
-            'competitive' => 1,
-        ];
-
-        $command = UpdateGroupCommand::fromRequest($data);
-
-        self::assertSame('Arena', $command->venue);
-    }
-
     public function testDescriptionIsTrimmed() : void {
         $data = [
             'id' => '550e8400-e29b-41d4-a716-446655440000',
             'groupLevelId' => '12345678-9012-3456-7890-123456789012',
             'name' => 'Baddaren',
-            'venue' => 'arena',
+            'venue' => 'Mariebad',
             'active' => 1,
             'competitive' => 1,
             'description' => '  För nybörjare  ',
@@ -83,7 +68,7 @@ final class UpdateGroupCommandTest extends TestCase {
             'id' => '550e8400-e29b-41d4-a716-446655440000',
             'groupLevelId' => '12345678-9012-3456-7890-123456789012',
             'name' => 'Baddaren',
-            'venue' => 'arena',
+            'venue' => 'Mariebad',
             'active' => 1,
             'competitive' => 1,
         ];

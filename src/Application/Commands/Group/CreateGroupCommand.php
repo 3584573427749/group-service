@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Commands\Group;
 
+use App\Domain\Enums\Venue;
 use App\Domain\ValueObjects\GroupLevelId;
 
 class CreateGroupCommand {
@@ -11,7 +12,7 @@ class CreateGroupCommand {
         public GroupLevelId $groupLevelId,
         public string $name,
         public string $description,
-        public string $venue,
+        public Venue $venue,
         public int $active,
         public int $competitive,
     ) {
@@ -28,10 +29,7 @@ class CreateGroupCommand {
             |>mb_strtolower(...)
             |>mb_ucfirst(...),
             description: trim($data['description'] ?? ''),
-            venue: $data['venue']
-            |>trim(...)
-            |>mb_strtolower(...)
-            |>mb_ucfirst(...),
+            venue:Venue::from($data['venue']),
             active: (int) filter_var($data['active'], FILTER_VALIDATE_INT),
             competitive: (int) filter_var($data['competitive'], FILTER_VALIDATE_INT),
         );

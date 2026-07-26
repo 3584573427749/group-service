@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Commands\Group;
 
 use App\Application\Commands\Group\CreateGroupCommand;
+use App\Domain\Enums\Venue;
 use PHPUnit\Framework\TestCase;
 
 final class CreateGroupCommandTest extends TestCase {
@@ -13,7 +14,7 @@ final class CreateGroupCommandTest extends TestCase {
             'groupLevelId' => '550e8400-e29b-41d4-a716-446655440000',
             'name' => 'Baddaren',
             'description' => 'För nybörjare',
-            'venue' => 'arena',
+            'venue' => 'Mariebad',
             'active' => 1,
             'competitive' => 1,
         ];
@@ -23,7 +24,7 @@ final class CreateGroupCommandTest extends TestCase {
         self::assertSame('550e8400-e29b-41d4-a716-446655440000', $command->groupLevelId->toString());
         self::assertSame('Baddaren', $command->name);
         self::assertSame('För nybörjare', $command->description);
-        self::assertSame('Arena', $command->venue);
+        self::assertSame(Venue::MARIEBAD, $command->venue);
         self::assertSame(1, $command->active);
         self::assertSame(1, $command->competitive);
     }
@@ -33,7 +34,7 @@ final class CreateGroupCommandTest extends TestCase {
             'name' => '  bADdArEn  ',
             'groupLevelId' => '550e8400-e29b-41d4-a716-446655440000',
             'description' => 'För nybörjare',
-            'venue' => 'arena',
+            'venue' => Venue::MARIEBAD->value,
             'active' => 1,
             'competitive' => 1,
         ];
@@ -43,26 +44,11 @@ final class CreateGroupCommandTest extends TestCase {
         self::assertSame('Baddaren', $command->name);
     }
 
-    public function testVenueIsTrimmedAndNormalized() : void {
-        $data = [
-            'name' => 'Baddaren',
-            'groupLevelId' => '550e8400-e29b-41d4-a716-446655440000',
-            'description' => 'För nybörjare',
-            'venue' => '     arEna  ',
-            'active' => 1,
-            'competitive' => 1,
-        ];
-
-        $command = CreateGroupCommand::fromRequest($data);
-
-        self::assertSame('Arena', $command->venue);
-    }
-
     public function testDescriptionIsTrimmed() : void {
         $data = [
             'groupLevelId' => '550e8400-e29b-41d4-a716-446655440000',
             'name' => 'Baddaren',
-            'venue' => 'arena',
+            'venue' => Venue::MARIEBAD->value,
             'active' => 1,
             'competitive' => 1,
             'description' => '  För nybörjare  ',
@@ -77,7 +63,7 @@ final class CreateGroupCommandTest extends TestCase {
         $data = [
             'groupLevelId' => '550e8400-e29b-41d4-a716-446655440000',
             'name' => 'Baddaren',
-            'venue' => 'arena',
+            'venue' => Venue::MARIEBAD->value,
             'active' => 1,
             'competitive' => 1,
         ];

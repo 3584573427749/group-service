@@ -19,7 +19,7 @@ final class CreateGroupHandlerTest extends TestCase {
             'groupLevelId' => '12345678-9012-3456-7890-123456789012',
             'name' => 'Baddaren',
             'description' => 'För nybörjare',
-            'venue' => 'arena',
+            'venue' => 'Mariebad',
             'active' => 1,
             'competitive' => 1,
         ]);
@@ -62,7 +62,7 @@ final class CreateGroupHandlerTest extends TestCase {
             'groupLevelId' => '12345678-9012-3456-7890-123456789012',
             'name' => 'Baddaren',
             'description' => 'För nybörjare',
-            'venue' => 'arena',
+            'venue' => 'Mariebad',
             'active' => 1,
             'competitive' => 1,
         ]);

@@ -8,6 +8,7 @@ use App\Application\Commands\Group\UpdateGroupCommand;
 use App\Application\Handlers\Group\UpdateGroupHandler;
 use App\Domain\DataTransportObjects\GroupDTO;
 use App\Domain\Entities\Group;
+use App\Domain\Enums\Venue;
 use App\Domain\Exception\ValidationException;
 use App\Domain\ValueObjects\DateTimeValue;
 use App\Domain\ValueObjects\GroupId;
@@ -28,7 +29,7 @@ final class UpdateGroupActionTest extends TestCase {
             new GroupLevelId('660e8400-e29b-41d4-a716-446655440000'),
             'Pingvinen',
             'Kan simma själv',
-            'Arena',
+            Venue::ALANDS_IDROTTCENTER,
             1,
             1,
             new DateTimeValue('2026-06-10T10:00:00+00:00'),
@@ -64,7 +65,7 @@ final class UpdateGroupActionTest extends TestCase {
                 'groupLevelId' => '660e8400-e29b-41d4-a716-446655440000',
                 'name' => 'Pingvinen',
                 'description' => 'Kan simma själv',
-                'venue' => 'Arena',
+                'venue' => 'Mariebad',
                 'active' => 1,
                 'competitive' => 1,
             ]);
@@ -84,7 +85,7 @@ final class UpdateGroupActionTest extends TestCase {
         self::assertSame('550e8400-e29b-41d4-a716-446655440000', $payload['data']['id'], );
         self::assertSame('Pingvinen', $payload['data']['name'], );
         self::assertSame('Kan simma själv', $payload['data']['description'], );
-        self::assertSame('Arena', $payload['data']['venue'], );
+        self::assertSame('Ålands Idrottscenter', $payload['data']['venue'], );
         self::assertSame(1, $payload['data']['active'], );
         self::assertSame(1, $payload['data']['competitive'], );
     }

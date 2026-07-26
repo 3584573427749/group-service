@@ -7,6 +7,7 @@ namespace Tests\Unit\Application\Handlers\Group;
 use App\Application\Handlers\Group\GetGroupHandler;
 use App\Domain\DataTransportObjects\GroupDTO;
 use App\Domain\Entities\Group;
+use App\Domain\Enums\Venue;
 use App\Domain\Repositories\GroupRepository;
 use App\Domain\ValueObjects\DateTimeValue;
 use App\Domain\ValueObjects\GroupId;
@@ -45,7 +46,7 @@ final class GetGroupHandlerTest extends TestCase {
                     '12345678-9012-3456-7890-123456789012',
                     'Baddaren',
                     'För nybörjare',
-                    'arena',
+                    Venue::ALANDS_IDROTTCENTER,
                     1,
                     1,
                 ),
@@ -54,7 +55,7 @@ final class GetGroupHandlerTest extends TestCase {
                     '12345678-9012-3456-7890-123456789012',
                     'Pingvinen',
                     'För avancerade',
-                    'stadion',
+                    Venue::MARIEBAD,
                     1,
                     1,
                 ),
@@ -101,7 +102,7 @@ final class GetGroupHandlerTest extends TestCase {
                     '12345678-9012-3456-7890-123456789012',
                     'Baddaren',
                     'För nybörjare',
-                    'Arena',
+                    Venue::ALANDS_IDROTTCENTER,
                     1,
                     1,
                 ),
@@ -121,7 +122,7 @@ final class GetGroupHandlerTest extends TestCase {
 
         self::assertSame('550e8400-e29b-41d4-a716-446655440000', $json['id']);
         self::assertSame('Baddaren', $json['name']);
-        self::assertSame('Arena', $json['venue']);
+        self::assertSame(Venue::ALANDS_IDROTTCENTER->value, $json['venue']);
         self::assertSame(1, $json['active']);
         self::assertSame(1, $json['competitive']);
     }
@@ -157,7 +158,7 @@ final class GetGroupHandlerTest extends TestCase {
         string $groupLevelId,
         string $name,
         string $description,
-        string $venue,
+        Venue $venue,
         int $active,
         int $competitive,
     ) : Group {

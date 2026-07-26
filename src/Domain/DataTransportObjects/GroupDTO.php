@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\DataTransportObjects;
 
 use App\Domain\Entities\Group;
+use App\Domain\Enums\Venue;
 use App\Domain\ValueObjects\DateTimeValue;
 use App\Domain\ValueObjects\GroupId;
 use App\Domain\ValueObjects\GroupLevelId;
@@ -15,7 +16,7 @@ class GroupDTO implements \JsonSerializable {
         private GroupLevelId $groupLevelId,
         private string $name,
         private string $description,
-        private string $venue,
+        private Venue $venue,
         private int $active,
         private int $competitive,
         private DateTimeValue $createdAt,
@@ -44,7 +45,7 @@ class GroupDTO implements \JsonSerializable {
             'groupLevelId' => $this->groupLevelId->toString(),
             'name' => $this->name,
             'description' => $this->description,
-            'venue' => $this->venue,
+            'venue' => $this->venue->value,
             'active' => $this->active,
             'competitive' => $this->competitive,
             'createdAt' => $this->createdAt->toISOString(),

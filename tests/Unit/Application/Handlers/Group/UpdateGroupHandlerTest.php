@@ -8,6 +8,7 @@ use App\Application\Commands\Group\UpdateGroupCommand;
 use App\Application\Handlers\Group\UpdateGroupHandler;
 use App\Domain\DataTransportObjects\GroupDTO;
 use App\Domain\Entities\Group;
+use App\Domain\Enums\Venue;
 use App\Domain\Repositories\GroupRepository;
 use App\Domain\ValueObjects\DateTimeValue;
 use App\Domain\ValueObjects\GroupId;
@@ -26,7 +27,7 @@ final class UpdateGroupHandlerTest extends TestCase {
             'groupLevelId' => '12345678-9012-3456-7890-123456789012',
             'name' => 'Baddaren',
             'description' => 'För nybörjare',
-            'venue' => 'Arena',
+            'venue' => 'Mariebad',
             'active' => 1,
             'competitive' => 1,
         ]);
@@ -44,7 +45,7 @@ final class UpdateGroupHandlerTest extends TestCase {
                 self::callback(function (Group $group) {
                     return $group->getName() === 'Baddaren'
                         && $group->getDescription() === 'För nybörjare'
-                        && $group->getVenue() === 'Arena'
+                        && $group->getVenue()->value === 'Mariebad'
                         && $group->getActive() === 1
                         && $group->getCompetitive() === 1
                         && $group->getUpdatedAt() !== null;
@@ -65,7 +66,7 @@ final class UpdateGroupHandlerTest extends TestCase {
 
         self::assertSame('Baddaren', $json['name']);
         self::assertSame('För nybörjare', $json['description']);
-        self::assertSame('Arena', $json['venue']);
+        self::assertSame('Mariebad', $json['venue']);
         self::assertSame(1, $json['active']);
         self::assertSame(1, $json['competitive']);
         self::assertNotNull($json['updatedAt']);
@@ -79,7 +80,7 @@ final class UpdateGroupHandlerTest extends TestCase {
             'groupLevelId' => '12345678-9012-3456-7890-123456789012',
             'name' => 'Baddaren',
             'description' => 'För nybörjare',
-            'venue' => 'Arena',
+            'venue' => 'Mariebad',
             'active' => 1,
             'competitive' => 1,
         ]);
@@ -109,7 +110,7 @@ final class UpdateGroupHandlerTest extends TestCase {
             new GroupLevelId('12345678-9012-3456-7890-123456789012'),
             'Pingvinen',
             'För nybörjare',
-            'Arena',
+            Venue::MARIEBAD,
             1,
             1,
             new DateTimeValue('2026-01-01 10:00:00'),

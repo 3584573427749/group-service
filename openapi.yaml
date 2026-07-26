@@ -33,21 +33,6 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/GroupLevel'
-        '422':
-          description: Validation error
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 404
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
 
     post:
       summary: Create group level
@@ -318,6 +303,287 @@ paths:
                   error:
                     $ref: '#/components/schemas/ErrorResponse'
 
+  /groups:
+    get:
+      summary: Get all groups
+      operationId: getGroups
+      tags:
+        - Groups
+      responses:
+        '200':
+          description: A list of groups
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - data
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Group'
+    post:
+      summary: Create group
+      operationId: createGroup
+      tags:
+        - Groups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGroupRequest'
+      responses:
+        '201':
+          description: Group created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - data
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 201
+                  data:
+                    $ref: '#/components/schemas/Group'
+        '400':
+          description: Invalid Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 422
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+  /groups/{id}:
+    get:
+      summary: Get group by ID
+      operationId: getGroupById
+      tags:
+        - Groups
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Group found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - data
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    $ref: '#/components/schemas/Group'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Group not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Update group by ID
+      operationId: updateGroupById
+      tags:
+        - Groups
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGroupRequest'
+      responses:
+        '200':
+          description: Group updated
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - data
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    $ref: '#/components/schemas/Group'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Group not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Group already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 409
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 422
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      summary: Delete group by ID
+      description: Delete a group by its unique identifier
+      operationId: deleteGroupById
+      tags:
+        - Groups
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Group level deleted
+        '400':
+          description: Invalid id
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Group not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+
 components:
   schemas:
     ErrorResponse:
@@ -405,6 +671,143 @@ components:
           example: A group for beginners
         sortOrder:
           type: integer
+          example: 1
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    CreateGroupRequest:
+      type: object
+      required:
+        - groupLevelId
+        - name
+        - venue
+        - active
+        - competitive
+      properties:
+        groupLevelId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          minLength: 2
+          example: Beginner
+        description:
+          type: string
+          example: A group for beginners
+        venue:
+          type: string
+          enum:
+            - Mariebad
+            - Ålands Idrottscenter
+          example: Mariebad
+        active:
+          type: integer
+          enum:
+            - 0
+            - 1
+          example: 1
+        competitive:
+          type: integer
+          enum:
+            - 0
+            - 1
+          example: 1
+
+    UpdateGroupRequest:
+      type: object
+      required:
+        - id
+        - groupLevelId
+        - name
+        - venue
+        - active
+        - competitive
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        groupLevelId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          minLength: 2
+          example: Beginner
+        description:
+          type: string
+          example: A group for beginners
+        venue:
+          type: string
+          enum:
+            - Mariebad
+            - Ålands Idrottscenter
+          example: Mariebad
+        active:
+          type: integer
+          enum:
+            - 0
+            - 1
+          example: 1
+        competitive:
+          type: integer
+          enum:
+            - 0
+            - 1
+          example: 1
+
+    Group:
+      type: object
+      required:
+        - id
+        - groupLevelId
+        - name
+        - description
+        - venue
+        - active
+        - competitive
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        groupLevelId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          minLength: 2
+          example: Beginner
+        description:
+          type: string
+          example: A group for beginners
+        venue:
+          type: string
+          enum:
+            - Mariebad
+            - Ålands Idrottscenter
+          example: Mariebad
+        active:
+          type: integer
+          enum:
+            - 0
+            - 1
+          example: 1
+        competitive:
+          type: integer
+          enum:
+            - 0
+            - 1
           example: 1
         createdAt:
           type: string

@@ -8,6 +8,7 @@ use App\Application\Commands\Group\CreateGroupCommand;
 use App\Application\Handlers\Group\CreateGroupHandler;
 use App\Domain\DataTransportObjects\GroupDTO;
 use App\Domain\Entities\Group;
+use App\Domain\Enums\Venue;
 use App\Domain\Exception\ValidationException;
 use App\Domain\ValueObjects\DateTimeValue;
 use App\Domain\ValueObjects\GroupId;
@@ -28,7 +29,7 @@ final class CreateGroupActionTest extends TestCase {
             new GroupLevelId('550e8400-e29b-41d4-a716-446655440000'),
             'Baddaren',
             'För nybörjare',
-            'Arena',
+            Venue::ALANDS_IDROTTCENTER,
             1,
             1,
             new DateTimeValue('2026-06-10T10:00:00+00:00'),
@@ -56,7 +57,7 @@ final class CreateGroupActionTest extends TestCase {
                 'groupLevelId' => '550e8400-e29b-41d4-a716-446655440000',
                 'name' => 'Baddaren',
                 'description' => 'För nybörjare',
-                'venue' => 'Arena',
+                'venue' => Venue::ALANDS_IDROTTCENTER->value,
                 'active' => 1,
                 'competitive' => 1,
             ]);

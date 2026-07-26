@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Infrastructure\Database;
 
 use App\Domain\Entities\Group;
+use App\Domain\Enums\Venue;
 use App\Domain\Exception\NotFoundException;
 use App\Domain\ValueObjects\DateTimeValue;
 use App\Domain\ValueObjects\GroupId;
@@ -28,7 +29,7 @@ final class DbalGroupRepositoryTest extends DatabaseBaseTestCase {
         self::assertNotFalse($row);
         self::assertSame('Baddaren', $row['name']);
         self::assertSame('För nybörjare', $row['description']);
-        self::assertSame('Mariebad', $row['venue']);
+        self::assertSame('Ålands Idrottscenter', $row['venue']);
         self::assertSame(1, $row['active']);
         self::assertSame(1, $row['competitive']);
     }
@@ -125,7 +126,7 @@ final class DbalGroupRepositoryTest extends DatabaseBaseTestCase {
         self::assertInstanceOf(Group::class, $result);
         self::assertSame('Baddaren', $result->getName());
         self::assertSame('För nybörjare', $result->getDescription());
-        self::assertSame('Mariebad', $result->getVenue());
+        self::assertSame(Venue::MARIEBAD, $result->getVenue());
         self::assertSame(1, $result->getActive());
         self::assertSame(1, $result->getCompetitive());
     }
@@ -181,7 +182,7 @@ final class DbalGroupRepositoryTest extends DatabaseBaseTestCase {
             new GroupLevelId('660e8400-e29b-41d4-a716-446655440000'),
             'Baddaren',
             'För nybörjare',
-            'Mariebad',
+            Venue::ALANDS_IDROTTCENTER,
             1,
             1,
             new DateTimeValue('2026-01-01 10:00:00'),
