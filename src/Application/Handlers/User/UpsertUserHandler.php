@@ -7,6 +7,7 @@ namespace App\Application\Handlers\User;
 use App\Application\Commands\User\UpsertUserCommand;
 use App\Domain\DataTransportObjects\UserDTO;
 use App\Domain\Entities\User;
+use App\Domain\ValueObjects\DateTimeValue;
 
 class UpsertUserHandler extends UserHandler {
     public function handle(UpsertUserCommand $command) : UserDTO {
@@ -23,7 +24,7 @@ class UpsertUserHandler extends UserHandler {
             $user->setFirstName($command->firstName);
             $user->setLastName($command->lastName);
             $user->setActive($command->active);
-            $user->setUpdatedAt($command->updatedAt);
+            $user->setUpdatedAt(new DateTimeValue('now'));
             $this->repository->update($user);
         }
 

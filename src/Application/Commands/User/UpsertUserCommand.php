@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Commands\User;
 
-use App\Domain\ValueObjects\DateTimeValue;
 use App\Domain\ValueObjects\UserId;
 
 class UpsertUserCommand {
@@ -13,8 +12,6 @@ class UpsertUserCommand {
         public string $firstName,
         public string $lastName,
         public int $active,
-        public DateTimeValue $createdAt,
-        public ?DateTimeValue $updatedAt = null,
     ) {
     }
 
@@ -24,11 +21,15 @@ class UpsertUserCommand {
     public static function fromRequest(array $data) : self {
         return new self(
             new UserId($data['id']),
-            trim($data['firstName']),
-            trim($data['lastName']),
+            $data['firstName']
+                |> trim(...)
+                |> mb_strtolower(...)
+                |> mb_ucfirst(...),
+            $data['lastName']
+                |> trim(...)
+                |> mb_strtolower(...)
+                |> mb_ucfirst(...),
             (int)filter_var($data['active'], FILTER_VALIDATE_INT),
-            new DateTimeValue(date('Y-m-d H:i:s')),
-            null,
         );
     }
 }

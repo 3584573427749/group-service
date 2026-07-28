@@ -75,13 +75,16 @@ class User implements JsonSerializable {
     }
 
     public static function fromCommand(UpsertUserCommand $command) : self {
+        // fromCommand används endast vid skapande av ny användare
+        // därför sätts createdAt till nuvarande tid
+        // och updatedAt till null
         return new self(
             $command->id,
             $command->firstName,
             $command->lastName,
             $command->active,
-            $command->createdAt,
-            $command->updatedAt,
+            new DateTimeValue('now'),
+            null,
         );
     }
 
@@ -105,8 +108,8 @@ class User implements JsonSerializable {
     public function jsonSerialize() : array {
         return [
             'id' => $this->id->toString(),
-            'first_name' => $this->firstName,
-            'last_name' => $this->lastName,
+            'firstName' => $this->firstName,
+            'lastName' => $this->lastName,
             'active' => $this->active,
             'createdAt' => $this->createdAt->toString(),
             'updatedAt' => $this->updatedAt ? $this->updatedAt->toString() : null,
