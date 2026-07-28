@@ -20,6 +20,9 @@ class GetUserHandler extends UserHandler {
         );
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function getId(UserId $id) : UserDTO {
         $user = $this->repository->getById($id);
         if ($user === false) {
