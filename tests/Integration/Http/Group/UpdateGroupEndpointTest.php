@@ -91,7 +91,7 @@ final class UpdateGroupEndpointTest extends BaseApiTestCases {
         );
     }
 
-    public function testReturns404WhenGroupLevelDoesNotExist() : void {
+    public function testReturns404WhenGroupDoesNotExist() : void {
         $this->loadSchema('groups');
 
         $request = (new ServerRequestFactory())

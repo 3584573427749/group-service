@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Group Service API
-  version: 0.1.1
+  version: 0.1.2
   description: >-
     OpenAPI för hantering av grupper, ledare och simmare i simning.ax-miljön
 
@@ -552,7 +552,7 @@ paths:
             format: uuid
       responses:
         '204':
-          description: Group level deleted
+          description: Group deleted
         '400':
           description: Invalid id
           content:
@@ -570,6 +570,193 @@ paths:
                     $ref: '#/components/schemas/ErrorResponse'
         '404':
           description: Group not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+
+  /users:
+    get:
+      summary: Get all users
+      operationId: getUsers
+      tags:
+        - Users
+      responses:
+        200:
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - data
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+    post:
+      summary: Adds or updates a user
+      operationId: upsertUser
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User created or updated
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - data
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 422
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+  /users/{id}:
+    get:
+      summary: Get user by ID
+      operationId: getUserById
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: User found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - data
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      summary: Delete user by ID
+      description: Delete a user by its unique identifier
+      operationId: deleteUserById
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: User deleted
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
           content:
             application/json:
               schema:
@@ -821,28 +1008,28 @@ components:
       type: object
       required:
         - id
-        - email
         - firstName
         - lastName
-        - roles
-        - createdAt
+        - active
       properties:
         id:
           type: string
           format: uuid
-        email:
-          type: string
-          format: email
         firstName:
           type: string
         lastName:
           type: string
-        roles:
-          type: array
-          items:
-            type: string
-          example:
-            - user
-          createdAt:
-            type: string
-            format: date-time
+        active:
+          type: integer
+          enum:
+            - 0
+            - 1
+          example: 1
+        createdAt:
+          type: string
+          format: date-time
+          nullable: true
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
