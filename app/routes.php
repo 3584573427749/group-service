@@ -7,6 +7,9 @@ use App\Http\Actions\Group\DeleteGroupAction;
 use App\Http\Actions\Group\GetAllGroupsAction;
 use App\Http\Actions\Group\GetGroupAction;
 use App\Http\Actions\Group\UpdateGroupAction;
+use App\Http\Actions\GroupLeader\DeleteGroupLeaderAction;
+use App\Http\Actions\GroupLeader\DeleteGroupLeadersAction;
+use App\Http\Actions\GroupLeader\DeleteLeaderGroupsAction;
 use App\Http\Actions\GroupLeader\GetGroupLeadersAction;
 use App\Http\Actions\GroupLeader\GetLeaderGroupsAction;
 use App\Http\Actions\GroupLeader\UpsertGroupLeaderAction;
@@ -43,6 +46,8 @@ return function (App $app) : void {
     $app->post('/groups/{id}/users', UpsertGroupLeaderAction::class);
     $app->get('/groups/{id}/users', GetGroupLeadersAction::class);
     $app->get('/users/{id}/groups', GetLeaderGroupsAction::class);
-    /*    $app->delete('/groups/{id}/users/{userId}', DeleteGroupLeaderAction::class);
-    */
+    $app->delete('/groups/{id}/users/{userId}', DeleteGroupLeaderAction::class);
+    $app->delete('/groups/{id}/users', DeleteGroupLeadersAction::class);
+    $app->delete('/user/{id}/groups', DeleteLeaderGroupsAction::class);
+
 };

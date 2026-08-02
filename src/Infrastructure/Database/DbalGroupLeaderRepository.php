@@ -70,10 +70,10 @@ class DbalGroupLeaderRepository extends AbstractDbRepository implements GroupLea
         return array_map(fn ($row) => Group::fromDBRow($row), $rows);
     }
 
-    public function delete(GroupLeader $groupLeader) : void {
+    public function delete(GroupId $groupId, UserId $userId) : void {
         $this->connection->delete(
             self::TABLE,
-            ['group_id' => $groupLeader->getGroupId()->toString(), 'user_id' => $groupLeader->getUserId()->toString()],
+            ['group_id' => $groupId->toString(), 'user_id' => $userId->toString()],
         );
     }
 

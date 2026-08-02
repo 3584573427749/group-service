@@ -25,7 +25,7 @@ interface GroupLeaderRepository {
      */
     public function getGroups(UserId $id) : array;
 
-    public function delete(GroupLeader $groupLeader) : void;
+    public function delete(GroupId $groupId, UserId $userId) : void;
 
     public function deleteByUser(UserId $id) : void;
 
