@@ -6,9 +6,11 @@ namespace App\Application\Handlers\GroupLeader;
 
 use App\Application\Commands\GroupLeader\GroupLeaderCommand;
 use App\Domain\Entities\GroupLeader;
+use App\Domain\Enums\Role;
 use App\Domain\Repositories\GroupLeaderRepository;
 use App\Domain\Repositories\GroupRepository;
 use App\Domain\Repositories\UserRepository;
+use App\Domain\ValueObjects\DateTimeValue;
 use App\Domain\ValueObjects\GroupId;
 use App\Domain\ValueObjects\UserId;
 use Doctrine\DBAL\Connection;
@@ -27,6 +29,9 @@ class SaveGroupLeaderHandler extends GroupLeaderHandler {
 
         if ($groupLeader === false) {
             $groupLeader = GroupLeader::fromCommand($command);
+        } else {
+            $groupLeader->setRole(Role::from($command->role));
+            $groupLeader->setUpdatedAt(new DateTimeValue('now'));
         }
 
         $this->repository->save($groupLeader);
