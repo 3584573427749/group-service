@@ -48,6 +48,6 @@ return function (App $app) : void {
     $app->get('/users/{id}/groups', GetLeaderGroupsAction::class);
     $app->delete('/groups/{id}/users/{userId}', DeleteGroupLeaderAction::class);
     $app->delete('/groups/{id}/users', DeleteGroupLeadersAction::class);
-    $app->delete('/user/{id}/groups', DeleteLeaderGroupsAction::class);
+    $app->delete('/users/{id}/groups', DeleteLeaderGroupsAction::class);
 
 };

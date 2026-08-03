@@ -20,7 +20,7 @@ class DeleteGroupLeaderAction extends GroupLeaderAction {
      */
     protected function action() : Response {
         $group_id = $this->request->getAttribute('id');
-        $user_id = $this->request->getAttribute('user_id');
+        $user_id = $this->request->getAttribute('userId');
 
         $groupId = new GroupId($group_id);
         $userId = new UserId($user_id);

@@ -48,7 +48,7 @@ final class DeleteGroupLeaderActionTest extends TestCase {
                 '550e8400-e29b-41d4-a716-446655440000',
             )
             ->withAttribute(
-                'user_id',
+                'userId',
                 '660e8400-e29b-41d4-a716-446655440000',
             );
 

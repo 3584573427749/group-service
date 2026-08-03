@@ -96,7 +96,7 @@ class Group implements JsonSerializable {
             new GroupId($row['id']),
             new GroupLevelId($row['group_level_id']),
             $row['name'],
-            $row['description'],
+            $row['description'] ?? '',
             Venue::from($row['venue']),
             $row['active'],
             $row['competitive'],
