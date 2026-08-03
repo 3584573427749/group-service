@@ -2,10 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Domain\Repositories\GroupLeaderRepository;
 use App\Domain\Repositories\GroupLevelRepository;
 use App\Domain\Repositories\GroupRepository;
+use App\Domain\Repositories\UserRepository;
+use App\Infrastructure\Database\DbalGroupLeaderRepository;
 use App\Infrastructure\Database\DbalGroupLevelRepository;
 use App\Infrastructure\Database\DbalGroupRepository;
+use App\Infrastructure\Database\DbalUserRepository;
 
 use function DI\autowire;
 
@@ -16,5 +20,7 @@ return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
         GroupLevelRepository::class => autowire(DbalGroupLevelRepository::class),
         GroupRepository::class => autowire(DbalGroupRepository::class),
+        UserRepository::class => autowire(DbalUserRepository::class),
+        GroupLeaderRepository::class => autowire(DbalGroupLeaderRepository::class),
     ]);
 };

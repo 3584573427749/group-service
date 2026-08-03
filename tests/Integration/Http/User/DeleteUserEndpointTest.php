@@ -2,25 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration\Http\Group;
+namespace Tests\Integration\Http\User;
 
 use Slim\Psr7\Factory\ServerRequestFactory;
 use Tests\Integration\BaseApiTestCases;
 use Tests\Integration\OpenApi\OpenApiValidator;
 
-final class DeleteGroupEndpointTest extends BaseApiTestCases {
-    public function testReturns204WhenGroupExists() : void {
-        $this->loadSchema('groups');
+final class DeleteUserEndpointTest extends BaseApiTestCases {
+    public function testReturns204WhenUserExists() : void {
+        $this->loadSchema('users');
 
-        $this->seed('groups', [
+        $this->seed('users', [
             [
                 'id' => '550e8400-e29b-41d4-a716-446655440000',
-                'group_level_id' => '650e8400-e29b-41d4-a716-446655440000',
-                'name' => 'Baddaren',
-                'description' => 'För nybörjare',
-                'venue' => 'Mariebad',
+                'first_name' => 'Anna',
+                'last_name' => 'Andersson',
                 'active' => 1,
-                'competitive' => 1,
                 'created_at' => '2026-01-01 10:00:00',
                 'updated_at' => null,
             ],
@@ -29,7 +26,7 @@ final class DeleteGroupEndpointTest extends BaseApiTestCases {
         $request = (new ServerRequestFactory())
             ->createServerRequest(
                 'DELETE',
-                '/groups/550e8400-e29b-41d4-a716-446655440000',
+                '/users/550e8400-e29b-41d4-a716-446655440000',
             )
             ->withAttribute(
                 'id',
@@ -43,19 +40,19 @@ final class DeleteGroupEndpointTest extends BaseApiTestCases {
         $validator = new OpenApiValidator();
 
         $validator->validateResponse(
-            '/groups/{id}',
+            '/users/{id}',
             'delete',
             $response,
         );
     }
 
-    public function testReturns404WhenGroupDoesNotExist() : void {
-        $this->loadSchema('groups');
+    public function testReturns404WhenUserDoesNotExist() : void {
+        $this->loadSchema('users');
 
         $request = (new ServerRequestFactory())
             ->createServerRequest(
                 'DELETE',
-                '/groups/550e8400-e29b-41d4-a716-446655440000',
+                '/users/550e8400-e29b-41d4-a716-446655440000',
             )
             ->withAttribute(
                 'id',
@@ -69,19 +66,19 @@ final class DeleteGroupEndpointTest extends BaseApiTestCases {
         $validator = new OpenApiValidator();
 
         $validator->validateResponse(
-            '/groups/{id}',
+            '/users/{id}',
             'delete',
             $response,
         );
     }
 
     public function testReturns400WhenIdIsInvalid() : void {
-        $this->loadSchema('groups');
+        $this->loadSchema('users');
 
         $request = (new ServerRequestFactory())
             ->createServerRequest(
                 'DELETE',
-                '/groups/invalid',
+                '/users/invalid',
             )
             ->withAttribute(
                 'id',
@@ -95,7 +92,7 @@ final class DeleteGroupEndpointTest extends BaseApiTestCases {
         $validator = new OpenApiValidator();
 
         $validator->validateResponse(
-            '/groups/{id}',
+            '/users/{id}',
             'delete',
             $response,
         );
