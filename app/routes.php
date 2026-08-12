@@ -30,9 +30,9 @@ return function (App $app) : void {
     $app->post('/group-levels', CreateGroupLevelAction::class);
     $app->get('/group-levels', GetAllGroupLevelsAction::class);
     $app->get('/group-levels/{id}', GetGroupLevelAction::class);
+    $app->put('/group-levels/sortorder', UpdateGroupLevelSortOrderAction::class);
     $app->put('/group-levels/{id}', UpdateGroupLevelAction::class);
     $app->delete('/group-levels/{id}', DeleteGroupLevelAction::class);
-    $app->put('/group-levels/sortorder', UpdateGroupLevelSortOrderAction::class);
 
     $app->post('/groups', CreateGroupAction::class);
     $app->get('/groups', GetAllGroupsAction::class);

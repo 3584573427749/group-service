@@ -23,7 +23,6 @@ class UpdateGroupLevelSortOrderAction extends GroupLevelAction {
         if (count($errors) > 0) {
             throw new ValidationException('Felaktig indata', $errors);
         }
-
         $groupLevelCommand = UpdateGroupLevelSortOrderCommand::fromRequest($data);
         $this->handler->handle($groupLevelCommand);
 
