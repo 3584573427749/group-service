@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Group Service API
-  version: 0.1.3
+  version: 0.1.4
   description: >-
     OpenAPI för hantering av grupper, ledare och simmare i simning.ax-miljön
 
@@ -299,6 +299,51 @@ paths:
                   statusCode:
                     type: integer
                     example: 404
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+  /group-levels/sortorder:
+    put:
+      summary: Update group level sort order
+      operationId: updateGroupLevelSortOrder
+      tags:
+        - Group Levels
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGroupLevelSortOrderRequest'
+      responses:
+        204:
+            description: Group level sort order updated
+        '400':
+          description: Invalid id
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+        422:
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 422
                   error:
                     $ref: '#/components/schemas/ErrorResponse'
 
@@ -1120,6 +1165,22 @@ components:
           type: string
           format: date-time
           nullable: true
+
+    UpdateGroupLevelSortOrderRequest:
+      type: array
+      items:
+        type: object
+        required:
+          - id
+          - sortOrder
+        properties:
+          id:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426614174000
+          sortOrder:
+            type: integer
+            example: 1
 
     GroupLevel:
       type: object
