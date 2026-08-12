@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Repositories;
 
+use App\Domain\DataTransportObjects\GroupLevelSortOrderDTO;
 use App\Domain\Entities\GroupLevel;
 use App\Domain\ValueObjects\GroupLevelId;
 
@@ -18,4 +19,9 @@ interface GroupLevelRepository {
     public function getById(GroupLevelId $id) : GroupLevel;
 
     public function delete(GroupLevelId $id) : void;
+
+    /**
+     * @param array<GroupLevelSortOrderDTO> $command
+     */
+    public function updateOrder(array $command) : void;
 }

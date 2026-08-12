@@ -18,6 +18,7 @@ use App\Http\Actions\GroupLevel\DeleteGroupLevelAction;
 use App\Http\Actions\GroupLevel\GetAllGroupLevelsAction;
 use App\Http\Actions\GroupLevel\GetGroupLevelAction;
 use App\Http\Actions\GroupLevel\UpdateGroupLevelAction;
+use App\Http\Actions\GroupLevel\UpdateGroupLevelSortOrderAction;
 use App\Http\Actions\User\DeleteUserAction;
 use App\Http\Actions\User\GetAllUsersAction;
 use App\Http\Actions\User\GetUserAction;
@@ -31,6 +32,7 @@ return function (App $app) : void {
     $app->get('/group-levels/{id}', GetGroupLevelAction::class);
     $app->put('/group-levels/{id}', UpdateGroupLevelAction::class);
     $app->delete('/group-levels/{id}', DeleteGroupLevelAction::class);
+    $app->put('/group-levels/sortorder', UpdateGroupLevelSortOrderAction::class);
 
     $app->post('/groups', CreateGroupAction::class);
     $app->get('/groups', GetAllGroupsAction::class);
