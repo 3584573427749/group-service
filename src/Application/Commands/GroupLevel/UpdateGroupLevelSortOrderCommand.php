@@ -17,18 +17,18 @@ class UpdateGroupLevelSortOrderCommand {
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param array<array<string, mixed>> $data
      */
     public static function fromRequest(array $data) : self {
-        $retur = [];
+        $items = [];
         foreach ($data as $item) {
-            $retur[] = new GroupLevelSortOrderDTO(
+            $items[] = new GroupLevelSortOrderDTO(
                 id: new GroupLevelId($item['id']),
                 sortOrder: (int) filter_var($item['sortOrder'], FILTER_VALIDATE_INT),
             );
         }
         return new self(
-            command: $retur,
+            command: $items,
         );
     }
 }

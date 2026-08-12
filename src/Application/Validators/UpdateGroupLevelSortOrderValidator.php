@@ -6,11 +6,15 @@ namespace App\Application\Validators;
 
 class UpdateGroupLevelSortOrderValidator {
     /**
-     * @param array<string, mixed> $data
+     * @param array<array<string, mixed>> $data
      * @return string[]
      */
     public static function validate(array $data) : array {
         $errors = [];
+
+        if (empty($data)) {
+            $errors['data'] = 'Ogiltig dataformat';
+        }
 
         foreach ($data as $itm) {
             if (!isset($itm['id'])) {
