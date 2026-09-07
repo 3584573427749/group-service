@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Handlers\GroupLeader;
 
-use App\Domain\DataTransportObjects\UserDTO;
+use App\Domain\DataTransportObjects\GroupLeaderDTO;
 use App\Domain\Exception\NotFoundException;
 use App\Domain\Repositories\GroupLeaderRepository;
 use App\Domain\Repositories\GroupRepository;
@@ -17,7 +17,7 @@ class GetGroupLeadersHandler extends GroupLeaderHandler {
     }
 
     /**
-     * @return array<UserDTO>
+     * @return array<GroupLeaderDTO>
      */
     public function handle(GroupId $id) : array {
         $group = $this->groupRepository->getById($id);
@@ -26,11 +26,7 @@ class GetGroupLeadersHandler extends GroupLeaderHandler {
             throw new NotFoundException('Gruppen är inaktiv');
         }
 
-        $users = $this->repository->getUsers($id);
+        return $this->repository->getGroupLeaders($id);
 
-        return array_map(
-            fn ($user) => UserDTO::fromEntity($user),
-            $users,
-        );
     }
 }
