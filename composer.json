@@ -21,16 +21,16 @@
     "monolog/monolog": "^3.10",
     "vlucas/phpdotenv": "^5.6",
     "ramsey/uuid": "^4.9",
-    "guzzlehttp/guzzle": "^7.5"
+    "guzzlehttp/guzzle": "^8.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^12.5",
+    "phpunit/phpunit": "^13.3",
     "phpstan/phpstan": "^2.2",
     "friendsofphp/php-cs-fixer": "^3.95",
     "squizlabs/php_codesniffer": "^4.0",
-    "infection/infection": "^0.34.0",
-    "rector/rector": "^2.5.7",
-    "phpro/grumphp": "^2.22",
+    "infection/infection": "^0.34.2",
+    "rector/rector": "^2.6.1",
+    "phpro/grumphp": "^2.23",
     "league/openapi-psr7-validator": "^0.24.0"
   },
   "autoload": {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Infrastructure\Database;
 
+use App\Domain\DataTransportObjects\GroupLevelSortOrderDTO;
 use App\Domain\Entities\GroupLevel;
 use App\Domain\Exception\NotFoundException;
 use App\Domain\ValueObjects\DateTimeValue;
@@ -156,6 +157,65 @@ final class DbalGroupLevelRepositoryTest extends DatabaseBaseTestCase {
             new DateTimeValue('2026-01-01 10:00:00'),
             $updatedAt,
         );
+    }
+
+    public function testUpdateOrderUpdatesSortOrderForMultipleGroupLevels() : void {
+        $this->loadSchema('group_levels');
+
+        $this->seed('group_levels', [
+            [
+                'id' => '550e8400-e29b-41d4-a716-446655440000',
+                'name' => 'Baddaren',
+                'description' => '',
+                'sort_order' => 10,
+                'created_at' => '2026-01-01 10:00:00',
+                'updated_at' => null,
+            ],
+            [
+                'id' => '660e8400-e29b-41d4-a716-446655440000',
+                'name' => 'Pingvinen',
+                'description' => '',
+                'sort_order' => 20,
+                'created_at' => '2026-01-01 10:00:00',
+                'updated_at' => null,
+            ],
+        ]);
+
+        $command = [
+            new GroupLevelSortOrderDTO(
+                new GroupLevelId(
+                    '550e8400-e29b-41d4-a716-446655440000',
+                ),
+                1,
+            ),
+            new GroupLevelSortOrderDTO(
+                new GroupLevelId(
+                    '660e8400-e29b-41d4-a716-446655440000',
+                ),
+                2,
+            ),
+        ];
+
+        $this->repository->updateOrder($command);
+
+        $row1 = $this->connection->fetchAssociative(
+            'SELECT * FROM group_levels WHERE id = ?',
+            ['550e8400-e29b-41d4-a716-446655440000'],
+        );
+
+        $row2 = $this->connection->fetchAssociative(
+            'SELECT * FROM group_levels WHERE id = ?',
+            ['660e8400-e29b-41d4-a716-446655440000'],
+        );
+
+        self::assertNotFalse($row1);
+        self::assertNotFalse($row2);
+
+        self::assertSame('1', (string)$row1['sort_order']);
+        self::assertSame('2', (string)$row2['sort_order']);
+
+        self::assertNotNull($row1['updated_at']);
+        self::assertNotNull($row2['updated_at']);
     }
 
     protected function setUp() : void {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Database;
 
+use App\Domain\DataTransportObjects\GroupLevelSortOrderDTO;
 use App\Domain\Entities\GroupLevel;
 use App\Domain\Exception\NotFoundException;
 use App\Domain\Repositories\GroupLevelRepository;
@@ -50,6 +51,16 @@ class DbalGroupLevelRepository extends AbstractDbRepository implements GroupLeve
 
         if ($affectedRows === 0) {
             throw new NotFoundException('GroupLevel saknas');
+        }
+    }
+
+    /**
+     * @param array<GroupLevelSortOrderDTO> $command
+     * @throws Exception
+     */
+    public function updateOrder(array $command) : void {
+        foreach ($command as $item) {
+            $this->connection->update(self::TABLE, ['sort_order' => $item->getSortOrder(), 'updated_at' => date('Y-m-d H:i:s')], ['id' => $item->getId()->toString()]);
         }
     }
 }
