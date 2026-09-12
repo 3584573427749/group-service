@@ -45,7 +45,7 @@ class DbalGroupLeaderRepository extends AbstractDbRepository implements GroupLea
     public function getGroupLeaders(GroupId $id) : array {
         $rows = $this->connection->executeQuery(
             'SELECT users.id as user_id, first_name, last_name, 
-       group.id as group_id, group.name, group_leaders.role FROM users
+       groups.id as group_id, groups.name, group_leaders.role FROM users
     INNER JOIN ' . self::TABLE . ' ON users.id = ' . self::TABLE . '.user_id
     INNER JOIN groups ON groups.id = ' . self::TABLE . '.group_id
     WHERE ' . self::TABLE . '.group_id = ?',
@@ -61,8 +61,8 @@ class DbalGroupLeaderRepository extends AbstractDbRepository implements GroupLea
      */
     public function getLeaderGroups(UserId $id) : array {
         $rows = $this->connection->executeQuery(
-            'SELECT group.id as group_id, group.name, 
-       user.id as user_id, user.first_name, user.last_name, 
+            'SELECT groups.id as group_id, groups.name, 
+       users.id as user_id, users.first_name, users.last_name, 
       ' . self::TABLE . '.role FROM groups
     INNER JOIN ' . self::TABLE . ' ON groups.id = ' . self::TABLE . '.group_id
     INNER JOIN users ON users.id = ' . self::TABLE . '.user_id

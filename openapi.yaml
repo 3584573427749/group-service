@@ -785,7 +785,7 @@ paths:
             format: uuid
       responses:
         '200':
-          description: A list of users
+          description: A list of group leaders
           content:
             application/json:
               schema:
@@ -800,7 +800,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/User'
+                      $ref: '#/components/schemas/GroupLeader'
         '400':
           description: Bad request
           content:
@@ -967,7 +967,7 @@ paths:
 
   /users/{id}/groups:
     get:
-      summary: Get all groups for user
+      summary: Get all groups for leader
       operationId: getLeaderGroups
       tags:
         - Group-Leaders
@@ -980,7 +980,7 @@ paths:
             format: uuid
       responses:
         '200':
-          description: A list of groups
+          description: A list of groupleaders
           content:
             application/json:
               schema:
@@ -995,7 +995,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Group'
+                      $ref: '#/components/schemas/GroupLeader'
         '400':
           description: Bad request
           content:
@@ -1333,6 +1333,36 @@ components:
         userId:
           type: string
           format: uuid
+        role:
+          type: string
+          enum:
+            - Ledare
+            - Assistent
+            - Utbildare
+          example: Ledare
+
+    GroupLeader:
+      type: object
+      required:
+        - groupId
+        - name
+        - userId
+        - firstName
+        - lastName
+        - role
+      properties:
+        groupId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        userId:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
         role:
           type: string
           enum:
