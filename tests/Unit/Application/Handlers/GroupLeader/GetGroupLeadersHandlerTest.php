@@ -23,7 +23,7 @@ final class GetGroupLeadersHandlerTest extends TestCase {
 
         $repository
             ->expects(self::once())
-            ->method('getUsers')
+            ->method('getGroupLeaders')
             ->with($groupId);
 
         $group = $this->createMock(Group::class);
@@ -67,7 +67,7 @@ final class GetGroupLeadersHandlerTest extends TestCase {
 
         $repository
             ->expects(self::never())
-            ->method('getUsers');
+            ->method('getGroupLeaders');
 
         $handler = new GetGroupLeadersHandler(
             $db,

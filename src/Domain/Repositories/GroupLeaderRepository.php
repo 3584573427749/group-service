@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Repositories;
 
-use App\Domain\Entities\Group;
+use App\Domain\DataTransportObjects\GroupLeaderDTO;
 use App\Domain\Entities\GroupLeader;
-use App\Domain\Entities\User;
 use App\Domain\ValueObjects\GroupId;
 use App\Domain\ValueObjects\UserId;
 
@@ -16,14 +15,14 @@ interface GroupLeaderRepository {
     public function get(GroupId $groupId, UserId $userId) : GroupLeader|false;
 
     /**
-     * @return array<User>
+     * @return array<GroupLeaderDTO>
      */
-    public function getUsers(GroupId $id) : array;
+    public function getGroupLeaders(GroupId $id) : array;
 
     /**
-     * @return array<Group>
+     * @return array<GroupLeaderDTO>
      */
-    public function getGroups(UserId $id) : array;
+    public function getLeaderGroups(UserId $id) : array;
 
     public function delete(GroupId $groupId, UserId $userId) : void;
 
