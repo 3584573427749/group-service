@@ -19,6 +19,7 @@ use App\Http\Actions\GroupLevel\GetAllGroupLevelsAction;
 use App\Http\Actions\GroupLevel\GetGroupLevelAction;
 use App\Http\Actions\GroupLevel\UpdateGroupLevelAction;
 use App\Http\Actions\GroupLevel\UpdateGroupLevelSortOrderAction;
+use App\Http\Actions\Health\ShowHealthAction;
 use App\Http\Actions\User\DeleteUserAction;
 use App\Http\Actions\User\GetAllUsersAction;
 use App\Http\Actions\User\GetUserAction;
@@ -26,6 +27,7 @@ use App\Http\Actions\User\UpsertUserAction;
 use Slim\App;
 
 return function (App $app) : void {
+    $app->get('/health', ShowHealthAction::class);
 
     $app->post('/group-levels', CreateGroupLevelAction::class);
     $app->get('/group-levels', GetAllGroupLevelsAction::class);

@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Group Service API
-  version: 0.1.5
+  version: 0.1.6
   description: >-
     OpenAPI för hantering av grupper, ledare och simmare i simning.ax-miljön
 
@@ -9,6 +9,50 @@ servers:
   - url: http://localhost:8080
 
 paths:
+  /health:
+    get:
+      operationId: getHealth
+      tags:
+        - Health
+      summary: Service health information
+      responses:
+        '200':
+          description: Health information
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - data
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    required:
+                      - status
+                      - service
+                      - version
+                      - checks
+                    properties:
+                      status:
+                        type: string
+                        enum:
+                          - ok
+                          - degraded
+                      service:
+                        type: string
+                        example: auth-service
+                      version:
+                        type: string
+                        example: 1.5.0
+                      checks:
+                        type: object
+                        additionalProperties:
+                          type: string
+
   /group-levels:
     get:
       summary: Get all group levels
